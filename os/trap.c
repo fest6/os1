@@ -6,6 +6,8 @@
 #include "plic.h"
 #include "timer.h"
 
+#include "proc.h"
+
 static int64 kp_print_lock = 0;
 extern volatile int panicked;
 
@@ -50,6 +52,10 @@ void kernel_trap(struct ktrapframe *ktf) {
                 tracef("s-timer interrupt, cycle: %d", r_time());
                 set_next_timer();
                 // we never preempt kernel threads.
+                struct proc *p = curr_proc();
+                if (p != NULL) {
+                    yield();
+                }
                 break;
             case SupervisorExternal:
                 tracef("s-external interrupt.");
