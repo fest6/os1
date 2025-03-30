@@ -54,7 +54,9 @@ void kernel_trap(struct ktrapframe *ktf) {
                 // we never preempt kernel threads.
                 struct proc *p = curr_proc();
                 if (p != NULL) {
+                    int inkernel_trap = mycpu()->kernel_trap;
                     yield();
+                    mycpu()->kernel_trap = inkernel_trap
                 }
                 break;
             case SupervisorExternal:
