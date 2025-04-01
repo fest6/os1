@@ -54,15 +54,9 @@ void kernel_trap(struct ktrapframe *ktf) {
                 // we never preempt kernel threads.
                 struct proc *p = curr_proc();
                 if (p != NULL) {
-
                     int inkernel_trap = mycpu()->inkernel_trap;
                     uint64 sstatus = r_sstatus();
-                    uint64 scause  = r_scause();
-                    uint64 sie     = r_sie();
                     uint64 sepc    = r_sepc();
-                    uint64 stval   = r_stval();
-                    uint64 sip     = r_sip();
-                    uint64 satp    = r_satp();
                     mycpu()->inkernel_trap = 0;
                     yield();
                     mycpu()->inkernel_trap = inkernel_trap;
