@@ -55,10 +55,11 @@ void kernel_trap(struct ktrapframe *ktf) {
                 struct proc *p = curr_proc();
                 if (p != NULL) {
                     int inkernel_trap = mycpu()->inkernel_trap;
-                    mycpu()->r_sstatus = r_sstatus();
+                    uint64 sstatus = r_sstatus();
                     mycpu()->inkernel_trap = 0;
                     yield();
                     mycpu()->inkernel_trap = inkernel_trap;
+                    w_sstatus(sstatus);
                 }
                 break;
             case SupervisorExternal:
