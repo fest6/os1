@@ -67,7 +67,6 @@ void kernel_trap(struct ktrapframe *ktf) {
                     yield();
                     mycpu()->inkernel_trap = inkernel_trap;
                     w_sstatus(sstatus);
-                    w_sie(sie);
                     w_sepc(sepc);
                     w_sip(sip);
                     w_satp(satp);
