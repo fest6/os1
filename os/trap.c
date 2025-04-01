@@ -68,8 +68,6 @@ void kernel_trap(struct ktrapframe *ktf) {
                     mycpu()->inkernel_trap = inkernel_trap;
                     w_sstatus(sstatus);
                     w_sepc(sepc);
-                    w_sip(sip);
-                    w_satp(satp);
                 }
                 break;
             case SupervisorExternal:
